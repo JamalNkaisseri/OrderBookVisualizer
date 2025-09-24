@@ -260,3 +260,83 @@
     -fx-text-fill: #1e2033;
     -fx-font-weight: bold;
 }
+
+/* Depth Chart Styling */
+.depth-chart {
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: #444444;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.depth-chart-header {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 5px;
+}
+
+.depth-chart .chart-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.depth-chart .axis {
+    -fx-text-fill: #bbbbbb;
+    -fx-font-size: 10px;
+}
+
+.depth-chart .axis-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+}
+
+.depth-chart .chart-legend {
+    -fx-background-color: #333333;
+    -fx-border-color: #444444;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.depth-chart .chart-legend-item-symbol {
+    -fx-padding: 2px 8px 2px 8px;
+}
+
+.depth-chart .chart-legend-item {
+    -fx-text-fill: #ffffff;
+}
+
+/* Chart series colors */
+.depth-chart .series0 {
+    -fx-fill: rgba(76, 175, 80, 0.6); /* Green for bids */
+    -fx-stroke: #4CAF50;
+    -fx-stroke-width: 2px;
+}
+
+.depth-chart .series1 {
+    -fx-fill: rgba(244, 67, 54, 0.6); /* Red for asks */
+    -fx-stroke: #f44336;
+    -fx-stroke-width: 2px;
+}
+
+/* Chart plot background */
+.depth-chart .chart-plot-background {
+    -fx-background-color: #1a1a1a;
+}
+
+/* Grid lines */
+.depth-chart .chart-horizontal-grid-lines,
+.depth-chart .chart-vertical-grid-lines {
+    -fx-stroke: #333333;
+    -fx-stroke-width: 0.5px;
+}
+
+/* Section headers */
+.section-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 5px;
+}

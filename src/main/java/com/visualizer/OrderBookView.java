@@ -8,6 +8,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 public class OrderBookView extends VBox {
 
@@ -17,6 +19,7 @@ public class OrderBookView extends VBox {
     private Label headerLabel;
     private ComboBox<TradingPair> pairSelector;
     private WebSocketClient currentWebSocketClient;
+    private DepthChartView depthChartView;
 
     // Callback interface for notifying about pair changes
     public interface PairChangeListener {
@@ -29,8 +32,10 @@ public class OrderBookView extends VBox {
         this.currentTradingPair = initialTradingPair;
         this.bidOrders = FXCollections.observableArrayList();
         this.askOrders = FXCollections.observableArrayList();
+        this.depthChartView = new DepthChartView();
 
         initializeView();
+        bindDepthChart();
     }
 
     private void initializeView() {
@@ -47,24 +52,49 @@ public class OrderBookView extends VBox {
         headerSection.setAlignment(Pos.CENTER);
         headerSection.getChildren().addAll(pairSelector, headerLabel);
 
-        // Create tables
+        // Create order book tables
         OrderBookTableView bidsTable = new OrderBookTableView(bidOrders, true);
         OrderBookTableView asksTable = new OrderBookTableView(askOrders, false);
 
-        // Create sections
-        VBox bidSection = createTableSection("BIDS", "bid-label", bidsTable);
-        VBox askSection = createTableSection("ASKS", "ask-label", asksTable);
+        // Create order book section (left side)
+        VBox orderBookSection = createOrderBookSection(bidsTable, asksTable);
 
-        // Layout tables horizontally
-        HBox tablesContainer = new HBox(30);
-        tablesContainer.getChildren().addAll(bidSection, askSection);
-        tablesContainer.setAlignment(Pos.CENTER);
+        // Create main content area with order book on left and depth chart on right
+        HBox mainContent = new HBox(30);
+        mainContent.setAlignment(Pos.TOP_LEFT);
+        mainContent.getChildren().addAll(orderBookSection, depthChartView);
+
+        // Make the depth chart expand to fill available space
+        HBox.setHgrow(depthChartView, Priority.ALWAYS);
 
         // Main layout
         setPadding(new Insets(25));
         setAlignment(Pos.TOP_CENTER);
         setSpacing(25);
-        getChildren().addAll(headerSection, tablesContainer);
+        getChildren().addAll(headerSection, mainContent);
+    }
+
+    private VBox createOrderBookSection(OrderBookTableView bidsTable, OrderBookTableView asksTable) {
+        // Order book header
+        Label orderBookHeader = new Label("📈 Order Book");
+        orderBookHeader.getStyleClass().add("section-header");
+
+        // Create sections for bids and asks
+        VBox bidSection = createTableSection("BIDS", "bid-label", bidsTable);
+        VBox askSection = createTableSection("ASKS", "ask-label", asksTable);
+
+        // Layout bids and asks vertically (bids on top, asks below)
+        VBox tablesContainer = new VBox(20);
+        tablesContainer.getChildren().addAll(bidSection, askSection);
+        tablesContainer.setAlignment(Pos.CENTER);
+
+        // Complete order book section
+        VBox orderBookSection = new VBox(15);
+        orderBookSection.getChildren().addAll(orderBookHeader, tablesContainer);
+        orderBookSection.setAlignment(Pos.TOP_CENTER);
+        orderBookSection.setPrefWidth(400); // Fixed width for order book
+
+        return orderBookSection;
     }
 
     private ComboBox<TradingPair> createPairSelector() {
@@ -109,6 +139,7 @@ public class OrderBookView extends VBox {
         // Clear existing data
         bidOrders.clear();
         askOrders.clear();
+        depthChartView.clear();
 
         // Update current pair
         currentTradingPair = newPair;
@@ -126,11 +157,16 @@ public class OrderBookView extends VBox {
         Label label = new Label(labelText);
         label.getStyleClass().add(labelStyleClass);
 
-        VBox section = new VBox(15);
+        VBox section = new VBox(10);
         section.getChildren().addAll(label, table);
         section.setAlignment(Pos.CENTER);
 
         return section;
+    }
+
+    private void bindDepthChart() {
+        // Bind the depth chart to order book data
+        depthChartView.bindToOrderBook(bidOrders, askOrders);
     }
 
     // Getters

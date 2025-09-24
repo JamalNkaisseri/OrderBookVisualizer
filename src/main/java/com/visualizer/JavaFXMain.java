@@ -23,7 +23,7 @@ public class JavaFXMain extends Application {
         orderBookView.setPairChangeListener(this::onPairChanged);
 
         // Create scene
-        Scene scene = new Scene(orderBookView, 860, 750);
+        Scene scene = new Scene(orderBookView, 1200, 900);
         scene.getStylesheets().add(getClass().getResource("/theme.css").toExternalForm());
 
         // Setup stage
