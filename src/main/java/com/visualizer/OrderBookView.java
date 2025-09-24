@@ -21,6 +21,7 @@ public class OrderBookView extends VBox {
     private WebSocketClient currentWebSocketClient;
     private DepthChartView depthChartView;
     private MarketInfoWidget marketInfoWidget;
+    private VolatilityWidget volatilityWidget;
 
     // Callback interface for notifying about pair changes
     public interface PairChangeListener {
@@ -35,10 +36,12 @@ public class OrderBookView extends VBox {
         this.askOrders = FXCollections.observableArrayList();
         this.depthChartView = new DepthChartView();
         this.marketInfoWidget = new MarketInfoWidget();
+        this.volatilityWidget = new VolatilityWidget();
 
         initializeView();
         bindDepthChart();
         bindMarketInfo();
+        bindVolatilityWidget();
     }
 
     private void initializeView() {
@@ -62,18 +65,26 @@ public class OrderBookView extends VBox {
         // Create order book section (left side)
         VBox orderBookSection = createOrderBookSection(bidsTable, asksTable);
 
-        // Create right side with market info widget and depth chart
+        // Create widgets section (top right) - compact layout
+        HBox widgetsSection = new HBox(15);
+        widgetsSection.setAlignment(Pos.TOP_CENTER);
+        widgetsSection.getChildren().addAll(marketInfoWidget, volatilityWidget);
+
+        // Create right side with widgets on top and large depth chart below
         VBox rightSide = new VBox(20);
         rightSide.setAlignment(Pos.TOP_CENTER);
-        rightSide.getChildren().addAll(marketInfoWidget, depthChartView);
+        rightSide.getChildren().addAll(widgetsSection, depthChartView);
 
         // Create main content area
         HBox mainContent = new HBox(30);
         mainContent.setAlignment(Pos.TOP_LEFT);
         mainContent.getChildren().addAll(orderBookSection, rightSide);
 
-        // Make the depth chart expand to fill available space
+        // Make the right side expand to fill available space
         HBox.setHgrow(rightSide, Priority.ALWAYS);
+
+        // Make the depth chart expand within the right side
+        VBox.setVgrow(depthChartView, Priority.ALWAYS);
 
         // Main layout
         setPadding(new Insets(25));
@@ -148,9 +159,10 @@ public class OrderBookView extends VBox {
         bidOrders.clear();
         askOrders.clear();
 
-        // Clear depth chart and market info
+        // Clear depth chart, market info, and volatility widget
         depthChartView.clear();
         marketInfoWidget.clear();
+        volatilityWidget.clear();
 
         // Update current pair
         currentTradingPair = newPair;
@@ -185,6 +197,11 @@ public class OrderBookView extends VBox {
         marketInfoWidget.bindToOrderBook(bidOrders, askOrders);
     }
 
+    private void bindVolatilityWidget() {
+        // Bind the volatility widget to order book data
+        volatilityWidget.bindToOrderBook(bidOrders, askOrders);
+    }
+
     // Getters
     public ObservableList<Order> getBidOrders() { return bidOrders; }
     public ObservableList<Order> getAskOrders() { return askOrders; }
@@ -198,5 +215,15 @@ public class OrderBookView extends VBox {
     // Method to set current WebSocket client (for cleanup)
     public void setCurrentWebSocketClient(WebSocketClient client) {
         this.currentWebSocketClient = client;
+    }
+
+    // Cleanup method to stop all widgets when view is destroyed
+    public void cleanup() {
+        if (volatilityWidget != null) {
+            volatilityWidget.stop();
+        }
+        if (currentWebSocketClient != null) {
+            // Add proper WebSocket cleanup here when available
+        }
     }
 }
