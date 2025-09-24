@@ -1,0 +1,262 @@
+/* ====== Global Background & Font ====== */
+.root {
+    -fx-background-color: #0D1117;
+    -fx-font-family: "Segoe UI", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-smoothing-type: lcd;
+}
+
+/* ====== Main Header ====== */
+.main-header {
+    -fx-text-fill: #F0F6FC;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(139, 92, 246, 0.3), 10, 0, 0, 2);
+    -fx-padding: 0 0 10 0;
+}
+
+/* ====== Section Labels ====== */
+.bid-label {
+    -fx-text-fill: #00D26A;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 0 5 0;
+    -fx-background-color: rgba(0, 210, 106, 0.1);
+    -fx-background-radius: 6;
+    -fx-padding: 8 20 8 20;
+}
+
+.ask-label {
+    -fx-text-fill: #F85149;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 0 5 0;
+    -fx-background-color: rgba(248, 81, 73, 0.1);
+    -fx-background-radius: 6;
+    -fx-padding: 8 20 8 20;
+}
+
+/* ====== TableView Styling ====== */
+.table-view {
+    -fx-background-color: #161B22;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.bid-table .table-view {
+    -fx-border-color: rgba(0, 210, 106, 0.3);
+}
+
+.ask-table .table-view {
+    -fx-border-color: rgba(248, 81, 73, 0.3);
+}
+
+.table-view .column-header {
+    -fx-background-color: #21262D;
+    -fx-text-fill: #F0F6FC;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 12 8 12 8;
+    -fx-border-color: #30363D;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #21262D;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #F0F6FC;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-padding: 8 8 8 8;
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(139, 92, 246, 0.1);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(139, 92, 246, 0.2);
+    -fx-text-fill: #F0F6FC;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(255, 255, 255, 0.02);
+}
+
+.table-cell {
+    -fx-text-fill: #F0F6FC;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-alignment: center-right;
+}
+
+/* ====== Price Column Styling ====== */
+.bid-price-column .table-cell {
+    -fx-text-fill: #00D26A;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.ask-price-column .table-cell {
+    -fx-text-fill: #F85149;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.quantity-column .table-cell {
+    -fx-text-fill: #8B949E;
+    -fx-font-weight: 500;
+    -fx-font-size: 14px;
+}
+
+/* ====== Scrollbar Styling ====== */
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+    -fx-pref-height: 12;
+}
+
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: #161B22;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #30363D;
+    -fx-background-insets: 2;
+    -fx-background-radius: 6;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #484F58;
+}
+
+.scroll-bar .thumb:pressed {
+    -fx-background-color: #6E7681;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #161B22;
+    -fx-background-insets: 0;
+    -fx-background-radius: 6;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-background-color: transparent;
+}
+
+/* ====== Additional UI Elements ====== */
+.label {
+    -fx-text-fill: #F0F6FC;
+    -fx-background-color: transparent;
+    -fx-font-smoothing-type: lcd;
+}
+
+.button {
+    -fx-background-color: #238636;
+    -fx-text-fill: #F0F6FC;
+    -fx-border-color: transparent;
+    -fx-background-radius: 6;
+    -fx-padding: 8px 16px;
+    -fx-font-weight: 500;
+}
+
+.button:hover {
+    -fx-background-color: #2EA043;
+}
+
+.button:pressed {
+    -fx-background-color: #1A7F37;
+}
+
+.text-field {
+    -fx-background-color: #0D1117;
+    -fx-text-fill: #F0F6FC;
+    -fx-border-color: #30363D;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8px 12px;
+}
+
+.text-field:focused {
+    -fx-border-color: #1F6FEB;
+    -fx-effect: dropshadow(gaussian, rgba(31, 111, 235, 0.3), 3, 0, 0, 0);
+}
+
+/* Add these styles to your existing theme.css file */
+
+/* Pair Selector Dropdown Styling */
+.pair-selector {
+    -fx-background-color: #2a2d3e;
+    -fx-border-color: #00d4ff;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+    -fx-font-family: "Roboto Mono", monospace;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 212, 255, 0.3), 5, 0, 0, 0);
+}
+
+.pair-selector:hover {
+    -fx-border-color: #00ff88;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 255, 136, 0.4), 8, 0, 0, 0);
+}
+
+.pair-selector:focused {
+    -fx-border-color: #00ff88;
+    -fx-border-width: 2px;
+}
+
+/* Dropdown arrow */
+.pair-selector .arrow {
+    -fx-background-color: #00d4ff;
+}
+
+.pair-selector:hover .arrow {
+    -fx-background-color: #00ff88;
+}
+
+/* Dropdown list popup */
+.pair-selector .list-view {
+    -fx-background-color: #1e2033;
+    -fx-border-color: #00d4ff;
+    -fx-border-width: 1px;
+}
+
+.pair-selector .list-cell {
+    -fx-background-color: #1e2033;
+    -fx-text-fill: white;
+    -fx-font-family: "Roboto Mono", monospace;
+    -fx-padding: 8px 12px;
+}
+
+.pair-selector .list-cell:hover {
+    -fx-background-color: #2a2d3e;
+    -fx-text-fill: #00ff88;
+}
+
+.pair-selector .list-cell:selected {
+    -fx-background-color: #00d4ff;
+    -fx-text-fill: #1e2033;
+    -fx-font-weight: bold;
+}
