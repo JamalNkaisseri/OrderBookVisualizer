@@ -20,6 +20,7 @@ public class OrderBookView extends VBox {
     private ComboBox<TradingPair> pairSelector;
     private WebSocketClient currentWebSocketClient;
     private DepthChartView depthChartView;
+    private MarketInfoWidget marketInfoWidget;
 
     // Callback interface for notifying about pair changes
     public interface PairChangeListener {
@@ -33,9 +34,11 @@ public class OrderBookView extends VBox {
         this.bidOrders = FXCollections.observableArrayList();
         this.askOrders = FXCollections.observableArrayList();
         this.depthChartView = new DepthChartView();
+        this.marketInfoWidget = new MarketInfoWidget();
 
         initializeView();
         bindDepthChart();
+        bindMarketInfo();
     }
 
     private void initializeView() {
@@ -59,13 +62,18 @@ public class OrderBookView extends VBox {
         // Create order book section (left side)
         VBox orderBookSection = createOrderBookSection(bidsTable, asksTable);
 
-        // Create main content area with order book on left and depth chart on right
+        // Create right side with market info widget and depth chart
+        VBox rightSide = new VBox(20);
+        rightSide.setAlignment(Pos.TOP_CENTER);
+        rightSide.getChildren().addAll(marketInfoWidget, depthChartView);
+
+        // Create main content area
         HBox mainContent = new HBox(30);
         mainContent.setAlignment(Pos.TOP_LEFT);
-        mainContent.getChildren().addAll(orderBookSection, depthChartView);
+        mainContent.getChildren().addAll(orderBookSection, rightSide);
 
         // Make the depth chart expand to fill available space
-        HBox.setHgrow(depthChartView, Priority.ALWAYS);
+        HBox.setHgrow(rightSide, Priority.ALWAYS);
 
         // Main layout
         setPadding(new Insets(25));
@@ -139,7 +147,10 @@ public class OrderBookView extends VBox {
         // Clear existing data
         bidOrders.clear();
         askOrders.clear();
+
+        // Clear depth chart and market info
         depthChartView.clear();
+        marketInfoWidget.clear();
 
         // Update current pair
         currentTradingPair = newPair;
@@ -167,6 +178,11 @@ public class OrderBookView extends VBox {
     private void bindDepthChart() {
         // Bind the depth chart to order book data
         depthChartView.bindToOrderBook(bidOrders, askOrders);
+    }
+
+    private void bindMarketInfo() {
+        // Bind the market info widget to order book data
+        marketInfoWidget.bindToOrderBook(bidOrders, askOrders);
     }
 
     // Getters
