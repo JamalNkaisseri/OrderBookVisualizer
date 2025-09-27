@@ -6,9 +6,7 @@ import java.math.RoundingMode;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-/**
- * Collection of volatility indicators for crypto trading terminal
- */
+
 public class VolatilityIndicators {
 
     // Price data storage

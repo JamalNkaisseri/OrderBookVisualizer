@@ -6,7 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.logging.Logger;
+
 public class JavaFXMain extends Application {
+
+    private static final Logger LOGGER = Logger.getLogger(JavaFXMain.class.getName());
 
     private OrderBookView orderBookView;
     private WebSocketClient currentWebSocketClient;
@@ -58,7 +62,8 @@ public class JavaFXMain extends Application {
             // Start new WebSocket connection for the selected pair
             startWebSocketConnection(newPair);
 
-            System.out.println("🔄 Switched to trading pair: " + newPair.getDisplayName());
+            // Log instead of printing to console
+            LOGGER.info("🔄 Switched to trading pair: " + newPair.getDisplayName());
         });
     }
 
@@ -87,6 +92,10 @@ public class JavaFXMain extends Application {
     }
 
     public static void main(String[] args) {
+        // Disable logs for shipping
+        java.util.logging.Logger rootLogger = java.util.logging.Logger.getLogger("");
+        rootLogger.setLevel(java.util.logging.Level.OFF);
+
         launch();
     }
 }

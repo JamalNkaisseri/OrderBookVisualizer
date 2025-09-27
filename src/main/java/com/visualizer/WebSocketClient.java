@@ -3,10 +3,15 @@ package com.visualizer;
 import okhttp3.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Enhanced WebSocket client with connection management capabilities.
  */
 public class WebSocketClient extends WebSocketListener {
+    private static final Logger LOGGER = Logger.getLogger(WebSocketClient.class.getName());
+
     private final OkHttpClient client;
     private final ObjectMapper mapper;
     private final String url;
@@ -26,7 +31,7 @@ public class WebSocketClient extends WebSocketListener {
      */
     public void start() {
         if (isConnected) {
-            System.out.println("⚠️ WebSocket already connected to " + url);
+            LOGGER.fine("⚠️ WebSocket already connected to " + url);
             return;
         }
 
@@ -44,14 +49,14 @@ public class WebSocketClient extends WebSocketListener {
         if (webSocket != null && isConnected) {
             webSocket.close(1000, "Client closing connection");
             isConnected = false;
-            System.out.println("🔌 Disconnected from " + url);
+            LOGGER.info("🔌 Disconnected from " + url);
         }
     }
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
         isConnected = true;
-        System.out.println("✅ Connected to " + url);
+        LOGGER.info("✅ Connected to " + url);
     }
 
     @Override
@@ -64,13 +69,13 @@ public class WebSocketClient extends WebSocketListener {
     @Override
     public void onClosed(WebSocket webSocket, int code, String reason) {
         isConnected = false;
-        System.out.println("⌛ Closed: " + reason);
+        LOGGER.warning("Connection closed: " + reason);
     }
 
     @Override
     public void onFailure(WebSocket webSocket, Throwable t, Response response) {
         isConnected = false;
-        System.err.println("⚠️ Error: " + t.getMessage());
+        LOGGER.log(Level.SEVERE, "WebSocket failure", t);
     }
 
     // Getters
