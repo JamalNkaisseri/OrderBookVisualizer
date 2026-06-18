@@ -165,7 +165,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 Jamal Nkaisseri - [@JamalNkaisseri](https://github.com/JamalNkaisseri)
 
-x - @Jamxl98
+
 
 Project Link: [https://github.com/JamalNkaisseri/OrderBookVisualizer](https://github.com/JamalNkaisseri/OrderBookVisualizer)
 
